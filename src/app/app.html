@@ -1,0 +1,158 @@
+<div class="app-container d-flex flex-column min-vh-100">
+  
+  <header class="navbar navbar-dark bg-dark fixed-top px-3 shadow">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-dark me-3" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+      <span class="bi bi-people-fill"></span>
+    </button>
+    <a class="navbar-brand fw-bold" href="#">KAIBIGAN</a>
+  </div>
+  
+  <div class="text-light d-flex align-items-center position-relative dropdown">
+    <span class="me-2 d-none d-sm-inline">Hello, {{currentUser}}!</span>
+    
+    <button 
+      class="btn btn-link text-light p-0 border-0 fs-5 d-flex align-items-center dropdown-toggle" 
+      (click)="isDropdownOpen = !isDropdownOpen"
+      (blur)="isDropdownOpen = false"
+      id="currentUserIcon"
+      aria-label="User menu">
+      <i class="bi bi-person-fill"></i>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end position-absolute end-0 shadow" 
+        [class.show]="isDropdownOpen"
+        style="top: 100%; margin-top: 10px;">
+      <li>
+        <a class="dropdown-item d-flex align-items-center" (mousedown)="viewProfile()">
+          <i class="bi bi-person me-2"></i> View Profile
+        </a>
+      </li>
+      <li><hr class="dropdown-divider"></li>
+      <li>
+        <a class="dropdown-item d-flex align-items-center text-danger" (mousedown)="logout()">
+          <i class="bi bi-box-arrow-right me-2"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+  <div class="body-wrapper d-flex flex-grow-1 pt-5">
+    
+    <aside class="sidebar bg-light border-end" [class.collapsed]="isSidebarCollapsed">
+
+      <div class="search-wrapper mx-auto mt-4">
+          <form (ngSubmit)="onSearch()" #searchForm="ngForm">
+            <div class="input-group shadow-sm border rounded-3 overflow-hidden bg-white">
+              
+              <input 
+                type="text" 
+                name="search"
+                class="form-control border-0 ps-4 py-2" 
+                placeholder="Search" 
+                [(ngModel)]="searchQuery"
+                aria-label="Search inputs"
+                (blur)="onSearch()"
+              />
+
+              <button 
+                *ngIf="searchQuery"
+                class="btn bg-transparent border-0 text-muted px-2" 
+                type="button" 
+                (click)="clearSearch()"
+                aria-label="Clear search text">
+                <i class="bi bi-x-lg"></i>
+              </button>
+
+              <button 
+                class="btn btn-primary border-0 px-4" 
+                type="submit"
+                aria-label="Submit search">
+                <i class="bi bi-search"></i>
+              </button>
+
+            </div>
+          </form>
+        </div>
+
+      <div id="friendList" class="list-group list-group-flush pt-3">
+        
+        <a *ngFor="let user of filteredUsers" href="#" 
+            class="list-group-item list-group-item-action border-0 py-3 px-4"
+            (click)="selectUser(user)"
+            [class.active]="user.id == selectedUser.id"
+            >
+          <i class="bi bi-check-circle-fill custom-green"></i> &nbsp;{{user.name}}
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content flex-grow-1 p-4" [class.shifted]="isSidebarCollapsed">
+      <div class="container-fluid mt-3">
+        
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <span class="bi bi-person-circle mr-2" id="profileLogo"></span>
+            <button type="button" class="btn btn-outline-success" (click)="sendMessage()">
+              <i class="bi bi-envelope me-1"></i>  Message
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <h2 class="fw-semibold">{{selectedUser.name}}</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <h2>
+              <span *ngFor="let item of [1, 2, 3, 4, 5]" 
+      [ngClass]="item <= selectedUser.rating ? 'bi bi-heart-fill heart-color' : 'bi bi-heart heart-color'"></span>
+            </h2>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <p class="text-muted">{{selectedUser.bio}}</p>
+          </div>
+        </div>
+        
+
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-lg-6">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">
+                  <span class="bi bi-hand-thumbs-up-fill"></span>
+                  Likes
+                </h5>
+                <ul>
+                  <li *ngFor="let item of selectedUser.likes">{{item}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">
+                  <span class="bi bi-hand-thumbs-down-fill"></span>
+                  Dislikes
+                </h5>
+                <ul>
+                  <li *ngFor="let item of selectedUser.dislikes">{{item}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+</div>

@@ -1,0 +1,91 @@
+
+.body-wrapper {
+  margin-top: 8px; 
+}
+
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: calc(100vh - 56px); 
+  position: fixed;
+  top: 56px;
+  left: 0;
+  z-index: 1000;
+  transition: all 0.25s ease-in-out;
+}
+
+.sidebar.collapsed {
+  left: -260px;
+}
+
+.main-content {
+  margin-left: 260px; 
+  transition: all 0.25s ease-in-out;
+  background-color: #f8f9fa;
+}
+
+.main-content.shifted {
+  margin-left: 0;
+}
+
+@media (max-width: 768px) {
+
+  .sidebar {
+    left: -260px;
+  }
+  
+  .sidebar.collapsed {
+    left: 0;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+.search-wrapper {
+  max-width: 500px;
+  width: 90%;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: #fff;
+}
+
+.btn.bg-transparent:hover {
+  color: #212529 !important;
+}
+
+.btn-primary {
+  background-color: #212529;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #212529;
+  color: #fff;
+}
+
+.custom-green
+{
+  color: #6ed46f;
+}
+
+#friendList>.active {
+  background-color: #212529;
+}
+
+#currentUserIcon {
+  font-size:25px
+}
+
+#profileLogo
+{
+  font-size:80px;
+  width: 90px;
+}
+
+.heart-color {
+  color:#8a0909;
+}
